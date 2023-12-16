@@ -41,7 +41,7 @@ app.use(cors(corsOptions))
 const createSignature = (req) => {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
     const payload = `${req.method.toUpperCase()}&${url}&${req.buf}`;
-    const hmac = crypto.createHmac('sha1', process.env.WEBHOOK_SECRET);
+    const hmac = crypto.createHmac('sha1', 'AAAEDU@321');
     hmac.update(Buffer.from(payload), 'utf-8');
     return hmac.digest('hex');
 };
@@ -63,9 +63,13 @@ app.get('/artibot/test', async function (req, res) {
 });
 
 app.post('/artibot/webhook', verifyWebhookSignature, async function (req, res) {
-    console.log('Received ArtiBot.ai webhook payload', new Date());
-    console.log('Signature', req.headers[ARTIBOT_SIGNATURE_HEADER]);
-    console.log("body", req.body);
+    const data = {
+        data: req.body.lead.data,
+        page: req.body.meta.chat_start_page,
+        ip: req.body.meta.ip_address,
+        location: req.body.meta.location,
+    }
+    console.log("data: ", data);
     return res.status(200).json({
         message: "working"
     });
