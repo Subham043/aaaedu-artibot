@@ -4,7 +4,7 @@ const helmet = require("helmet");
 const hpp = require('hpp');
 const cors = require('cors');
 const crypto = require('crypto');
-const fetch = require("node-fetch");
+const axios = require("axios");
 
 const app = express();
 
@@ -65,16 +65,18 @@ const storeData = async (data) => {
     let bodyContent = JSON.stringify(data);
     
     if(data.status=='created'){
-        await fetch("https://aaaedu.in/api/v1/artibot-request/create", { 
+        await axios.request({
+            url: "https://aaaedu.in/api/v1/artibot-request/create",
             method: "POST",
-            body: bodyContent,
-            headers: headersList
+            headers: headersList,
+            data: bodyContent,
         });
     }else{
-        await fetch("https://aaaedu.in/api/v1/artibot-request/update/"+data.lead_id, { 
+        await axios.request({
+            url: "https://aaaedu.in/api/v1/artibot-request/update/"+data.lead_id,
             method: "POST",
-            body: bodyContent,
-            headers: headersList
+            headers: headersList,
+            data: bodyContent,
         });
     }
 
