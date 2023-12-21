@@ -66,14 +66,14 @@ const storeData = async (data) => {
     
     if(data.status=='created'){
         await axios.request({
-            url: "https://aaaedu.in/api/v1/artibot-request/create",
+            url: "https://server-api.aaaedu.in/api/v1/artibot-request/create",
             method: "POST",
             headers: headersList,
             data: bodyContent,
         });
     }else{
         await axios.request({
-            url: "https://aaaedu.in/api/v1/artibot-request/update/"+data.lead_id,
+            url: "https://server-api.aaaedu.in/api/v1/artibot-request/update/"+data.lead_id,
             method: "POST",
             headers: headersList,
             data: bodyContent,
